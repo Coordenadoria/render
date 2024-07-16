@@ -1,5 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+    <script>
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Gather form data
+        const formData = new FormData(this);
+        const data = {};
+        formData.forEach((value, key) => {
+            if (data[key]) {
+                data[key] = [].concat(data[key], value);  // Merge values if the key already exists
+            } else {
+                data[key] = value;
+            }
+        });
+
+        // Log form data to the console (for demonstration purposes)
+        console.log('Form Data Submitted:', data);
+
+        // Send form data to the server
+        fetch('https://your-backend-url.onrender.com/submit-form', {  // Atualize a URL para o seu backend no Render
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.text())
+        .then(message => {
+            alert(message);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
