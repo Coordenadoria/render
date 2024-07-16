@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: patient-notification-backend
+    env: node
+    plan: free
+    buildCommand: 'npm install'
+    startCommand: 'node server.js'
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase: patient-notification-db
+databases:
+  - name: patient-notification-db
+    plan: free
+    postgresVersion: 13
